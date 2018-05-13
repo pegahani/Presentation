@@ -95,6 +95,7 @@
 \newcommand{\NMF}{\emph{NMF}}
 
 \definecolor{mygreen}{rgb}{0, 0.5, 0}
+\newcommand{\PA}[1]{{\color{mygreen}{#1}}}
 
 
 %----------------------------------------------------------------------------------------
@@ -460,50 +461,6 @@ By querying a few pairs to the user, we find the optimal policy respecting his p
 \end{columns}
 \end{frame}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%\begin{frame}{Propagation}
-%\Fontvi
-%The goal is to compute an approximated set of non-dominated policies. 
-%
-%\begin{columns}
-%\begin{column}{.40\textwidth}
-%\ssmall{
-%\alert{Example}: If this set is $\mathcal{V}$,
-%\begin{itemize}
-%\item  Sophie's optimal trajectory is inside $\mathcal{V}$ (Eco friend)
-%\item  Kevin's optimal trajectory is inside $\mathcal{V}$ too (Speed lover)
-%\end{itemize}
-%}
-%\begin{center}
-%\includegraphics[scale=0.4]{figures-new/user-choise}
-%\end{center}
-%{\color{red} figure should be modifies with several optimal trajectories and trajectories for Sophie and Kevin}
-%\end{column}
-%\hspace{-0.5cm}
-%\begin{column}{.45\textwidth}
-%
-%Assume there are two polytopes:
-%\begin{columns}
-%\column{.45\textwidth}
-%\begin{figure}
-%\includegraphics[width=1.3\textwidth]{figures-new/points.pdf}
-%\caption{ {\ssmall $\{ \bar{V}^{\pi}: \pi \in \Pi \}$ is not given at the beginning}}
-%\end{figure}
-%\column{.45\textwidth}
-%\begin{figure}
-%\begin{tikzpicture}
-%\node[] (img) at (-15.9,8.3){\includegraphics[width=1.2\textwidth]{figures/Lambda.pdf}};
-%\node [align=left] at (-17.3, 9.7) {$\lambda_2$};
-%\node [align=left] at (-16., 6.8) {$\lambda_1$};
-%\end{tikzpicture}
-%\caption{ {\ssmall Unknown weight vectors} }
-%\end{figure}
-%\end{columns}
-%
-%\end{column}
-%\end{columns}
-%\end{frame}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}{Propagation Algorithm}
 %\Fontvi
@@ -751,22 +708,279 @@ Our method is \textbf{applicable for more than $200$ states}
 
 \section{IRMDP Application in Web Service Composition}
 
-\begin{frame}\frametitle{}
+%-------------------------------------
+
+\begin{frame}{}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{iimas/ws-composition.jpg}\footnote{the figure comes from Tammo van Lessen et al. presentation}
+\end{center}
+\end{frame}
+
+%----------------------------------------
+
+\begin{frame}{Goal}
+In Internet of Things (IoT) services composition, there are twoe services:
+\begin{itemize}
+	\item \PA{Abstract Service}: describe the functionality of a service, such as reserving hotel web services or airline web services.
+	\item \PA{Concrete Service}: refers to an executed service such a web services as booking.com, easyjet.com and et. 
+\end{itemize}
+
+\vspace{0.3cm}
+
+Each concrete service has different Quality of Services (QoS) levels.\\
+
+\vspace{0.3cm}
+
+\remark{Question}: 
+
+\begin{itemize}
+	\item for each abstract service, what concrete services should be selected 
+	\item what is the best abstract services permutation in the user’s task in
+order to satisfy the user's requirements in terms of the QoS ?
+	\item Qos has various attributes example: response time, throughput 
+\end{itemize}
 
 \end{frame}
 
 %-------------------------------------
+\begin{frame}[plain]
+\vspace{0.3cm}
+The advantage based value Iteration algorithm is implemented on real data base of Web services executions \cite{•}\\
+	\begin{center}
+	\includegraphics[width=0.6\textwidth]{iimas/table-line.pdf}\\
+	\includegraphics[width=0.5\textwidth]{iimas/states.pdf}\\
+	\includegraphics[width=0.5\textwidth]{iimas/actions-ws.pdf}\\
+	\end{center}
+		
+\end{frame}
+
+%-------------------------------------
+
+\begin{frame}\frametitle{How model Web Service Composition as MDP}
+A \textbf{VMDP-Service Composition (VMDP-SC} is a tuple $(T, AS, CS, P_t(.|as,cs), \bar{r}_t, AS_T)$, where  
+
+\begin{itemize}
+\item[ -] \textbf{MDP horizon length} $T= 1 \cdots N$ is a total number of time stages. 
+\item[-] \textbf{states:} $AS$ is set of \remark{abstract services}.
+\item[-] \textbf{actions}: $CS$ is set of \remark{ concrete services}.
+\item[-] \textbf{probability function:} $P_t(S_j | S_i, S_{ik} )$ is the probability of invoking the concrete service $S_{ik}$ for abstract activity $S_i$ and resulting in the abstract activity $S_j$.
+\item[-] \textbf{reward function:} $ \overline{r}_t: AS \times CS \longrightarrow \mathbb{R}^d$: reward function. %The $\overline{Q}(S_i, S_{ik})$ reward is the generated Q vector value after invoking $S_{ik}$ in $S_i$ at time step $t$. Given that 
+$d$ is the number of QoS criteria, we obtain $\overline{r}_t(S_i, S_{ik}) = ({r_1}_t(S_i, S_{ik}), \cdots, {r_d}_t(S_i, S_{ik}))$. 
+\item[-] \textbf{terminal states}: $AS_T$ is the set of terminal services. 
+
+\end{itemize}
+
+\end{frame}
+%------------------------------------
+\begin{frame}{Experimental Results}
+All experiments are on sequential form of abstract service connection. 
+	\begin{center}
+	\includegraphics[width=0.8\textwidth]{iimas/seq-mdp-.pdf}
+	\end{center}
+	we have a VMDP-SC with the following parameters:
+\begin{itemize}
+\item[-] number of \textbf{episodes}:  $N=64$
+\item[-] $744$ number of abstract services 
+\item[-] $3551$ total number of concrete services (in our case web services)
+\item[-] The transition function and terminal states depend on the proposed model or relation types among the abstract services. 
+\item[-] $\overline{r}_t \in \mathbb{R}^2$ with two quality of services: response time and throughout 
+\end{itemize}
+\end{frame}
+
+%------------------------------------
+\begin{frame}{Experimental Results}
+\begin{table}
+\begin{tabular}{ l | l | }
+  user & weight vector \\
+  \toprule
+   $\bar{W}_0$ & $[0.319797998295 \;\;\;\;\;\;\;\;, \;\;\;\;\;\;\;\; 0.680202001705]$ \\
+   $\bar{W}_1$ & $[0.8573741847324399 , 0.14262581526756013]$ \\
+   $\bar{W}_2$ & $[0.1696287781131175\;,\; 0.8303712218868825]$ \\
+   $\bar{W}_3$ & $[0.6451844883834318\;,\; 0.3548155116165682]$\\
+   $\bar{W}_4$ & $[0.47245438345\;\;\;\;\;\;\;\;\;\; , \;\;\;\;\;\;\;\;\;\; 0.52754561655]$\\ 
+ \end{tabular} 
+ \caption{The weight vectors for $5$ system users with various preferences on the attributes (throughput, response time).} 
+ \label{table:weights}
+\end{table}
+\end{frame}
+
+
+%------------------------------------
+\begin{frame}
+	\begin{figure}[t]
+\includegraphics[width=8cm]{iimas/rt_step_all++.pdf}
+\caption{This figures demonstrate how the accumulated response time increases during each time step. The weight preferences are based on table~\ref{table:weights}.} 
+\centering
+\label{fig:rt-vs-timestep}
+\end{figure}
+%%%%%%% 
+\end{frame}
+
+%----------------------------------
+\begin{frame}
+
+\begin{figure}[t]
+\includegraphics[width=8cm]{iimas/trough_step_all++.pdf}
+\caption{this demonstrates how the accumulated throughout increases during each time step. The weight preferences are based on table~\ref{table:weights}.}
+\centering
+\label{fig:trput-vs-timestep}
+\end{figure}
+\end{frame}
+%-----------------------------------
+\begin{frame}
+\begin{figure}[t]
+\includegraphics[width=8cm]{iimas/time-queries-all++.pdf}
+\caption{This figure shows the number of queries proposed to the user during each time step. The weight preferences are based on table~\ref{table:weights}.}
+\centering
+\label{fig:queries-vs-timestep}
+\end{figure}
+\end{frame}
+%------------------------------------
+\begin{frame}{Conclusion}
+
+\end{frame}
+
+%------------------------------------
+\begin{frame}
+	\begin{center}
+	Information Extraction from Internet Using Deep Reinforcement Learning Approach
+	\end{center}
+\end{frame}
+
+%-------------------------------------
 \section{Information Extraction from Internet Using Deep Reinforcement Learning Approach}
-\begin{frame}
+\begin{frame}{Project Goal}
+\begin{center}
+Receive a person's name from DataBase supported by Sociologists \\
+	$\Downarrow$\\
+	%\vspace{0.3cm}
+		\fbox{Our System}\\
+	%\vspace{0.3cm}	
+	$\Downarrow$\\
+	The person's professional history
+\end{center}
+\PA{Example}: John Smith : 2012 Edinburgh University - 2014 Sussex University - 2016 IBM - 2017 Bosch
+
+\PA{How to test the system}: John Smith + his destination is given in the DB \\
+John Smith left Mexico to \remark{Edinburgh University 2012} to do a PHD
+in \remark{Computer Vision}\\
+\vspace{0.5cm}
+If \textbf{Edinburgh University} and \textbf{2012} are in our result $\longrightarrow$ The system
+works correctly
 
 \end{frame}
 
 %------------------------------------------------
 \begin{frame}
+\begin{center}
+	\includegraphics[width=12cm]{iimas/query.pdf}
+\end{center}
+\end{frame}
+
+%-----------------------------------------------
+\begin{frame}{Question}
+	\begin{center}
+		When should we ask queries and when should we improve the
+		entities based on the already existed articles?
+	\end{center}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Queries and Extracted Entities}
+Query types for a given name:
+\begin{itemize}
+	\item name, 
+	\item name | PHD
+	\item name | doctorate,
+	\item name | master,
+	\item name | undergraduate,
+	\item name | university,
+	\item name | institute
+\end{itemize}
+\vspace{0.3cm}
+Search engines: Google, Bing, DuckDuckGo and Citeseer\\
+Send name $\longrightarrow$ \PA{generate query} + person's name $\longrightarrow$ get first 20 articles \\
+\vspace{0.3cm}
+Extract three entities from each article:\\
+\remark{Person's name, Organisation name, year- time}
+
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Challenges}
+\begin{center}
+	\includegraphics[width=11cm]{iimas/options.pdf}
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Markov Decision Process}
+\begin{center}
+	\includegraphics[width=11cm]{iimas/mdp.pdf}
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Actions in MDP}
+\begin{center}
+	\includegraphics[width=10cm]{iimas/actions.pdf}
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Question}
+
+\begin{center}
+How get the most accurate extracted entities by generating as few
+number of queries?
+\end{center}
 
 \end{frame}
 
 %------------------------------------------------
+\begin{frame}{Q-learning}
+Best solution maximizes expected reward in each episode $Q: S \times A \longrightarrow \mathbb{R}$ evaluates the value of selecting action $a$ in state $s$. \\
+\vspace{0.3cm}
+An iterative method that finds the best action in each state: 
+\begin{align*}
+Q(s_t, a_t) = Q(s_t, a_t) + \alpha [r_t + \gamma \text{max}_a Q(s_{t+1}, a) - Q(s_t, a_t)]
+\end{align*}
+Optimal Policy: 
+
+\begin{align*}
+a = \text{argmax}_a Q(s,a)
+\end{align*}
+
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Q Learning}
+\begin{center}
+	\includegraphics[width=11cm]{iimas/q-learning.pdf}
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Deep Q Networkx}
+\begin{center}
+	\includegraphics[width=11cm]{iimas/dqn.pdf}
+\end{center}
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Ongoing Works}
+
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}{Conclusion}
+
+\end{frame}
+
+%------------------------------------------------
+
 \section{An Automatic System for Extracting Information from Multi-party dialogues}
 \begin{frame}{REUS Project \hspace*{7.1cm}~ \includegraphics[width=0.8cm]{images/reus.png}}
 
