@@ -1181,9 +1181,325 @@ To define dialogue act tagging using unsupervised approaches:
 
 %------------------------------------------------
 
-\begin{frame}{}
+\begin{frame}
+\frametitle{Deterministic Solutions Based on Maximum Regrets in Markov Decision Processes with Imprecise Rewards}
+
+We are interested in finding a \textbf{deterministic policy} for a Markov Decision Processes with \textbf{Imprecise Rewards}.
+
+\begin{block}{Why deterministic policy?}
+\begin{itemize}
+\item \textbf{Stochastic policies are easier to compute} and allows to have better optimal value \textbf{BUT} ...
+\item The use of stochastic policies can be either not recommended or not possible:
+\begin{itemize}
+\item The use of a stochastic policy could be \textbf{ethically problematic} (``trolley dilemma'').
+\item A deterministic policy is \textbf{easier to understand} from a user's point of view. 
+\item The algorithm could be \textbf{executed only one}.
+\end{itemize}
+\end{itemize}
+\end{block}
 
 \end{frame}
+
+
+\begin{frame}
+\frametitle{How to model Imprecise rewards?}
+\begin{block}{\textit{Regret} of policy $f^{\pi}$ over reward function $r \in \mathcal{R}$}
+$$R(f^{\pi}, r) = \text{max}_{g} \; r \cdot g - r \cdot f^{\pi}\;.$$
+
+$R(f^{\pi}, r)$ is the loss of difference in value between f and the optimal policy under $r$. 
+\end{block}
+
+\begin{block}{\textit{Maximum regret} for policy $f^{\pi}$}
+$$MR(f^{\pi}, \mathcal{R}) = \text{max}_{r \in \mathcal{R}}\;R(f^{\pi},r)\;.$$
+\end{block}
+
+\begin{block}{The \textit{minimax regret} of feasible reward set $\mathcal{R}$}
+$$MM(\mathcal{R}) = \text{min}_{f^{\pi}}\; MR(f^{\pi}, r)\;.$$
+\end{block}
+
+In other words, when we select the $f$ policy, \textbf{what is the worst case loss over all possible rewards} $\mathcal{R}$. 
+%Considering it as a game, the adversary tries to find a reward value in order to maximise our loss.  
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Benders Decomposition}
+
+\begin{itemize}
+\item We compute the minimax regret with \textbf{Benders Decomposition}.
+\item The problem is \textbf{decomposed into a Master Problem (MP) and a Slave Problem (SP)}.
+\item The interaction between MP and SP can be viewed as a \textbf{game between two players}. 
+\item The MP finds an optimal policy that minimises the regret  w.r.t the given adversaries found so far.
+\item The SP searches for an adversary with the maximum gain against the master policy. 
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Benders Decomposition}
+\begin{block}{\texttt{Master Problem} (MP)}
+\begin{alignat}{3}
+\min_{\delta, f} && \delta & \\
+&\text{s.t.}&& r\cdot g - r \cdot f \leq \delta \quad \forall \langle g_r, r \rangle \in \text{GEN}\label{delta_cut}\\
+&& \quad& \gamma E^{\top} f + \beta = 0 
+\end{alignat}
+\end{block}
+\begin{itemize}
+\item We start with a \textbf{small (maybe empty) subset of constraints~\eqref{delta_cut}}.
+\item The MP interacts with the \emph{Slave Problem} to have either:
+\begin{itemize}
+\item  a \textbf{certificate of optimality} of the MP, or
+\item  a \textbf{new inequality} that can potentially change the value of the MP.
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Benders Decomposition}
+The slave program receives a \textbf{feasible policy $f^*$} (and the corresponding $\delta^*$) and 
+%a minimax regret value $\delta^*$; then it 
+\textbf{searches for a policy and a reward} value that maximise the regret of the given policy.
+\begin{block}{\texttt{Slave Problem} (SP)}
+\begin{alignat}{3}
+&\min_{Q, V, I, r} && \beta \cdot V - r \cdot f^* \\
+&\text{s.t.} && Q_a = r_a + \gamma P_aV &\quad \forall a \in A\\
+&& \quad& V \geq Q_a  &\quad \forall a \in A\\
+&& \quad& V \leq (1-I_a)M_a + Q_a  &\quad \forall a \in A\\
+&& \quad& Cr \leq d \\
+&& \quad& \sum_{a \in A} I_a = 1  \label{eq:sum_I}\\
+&& \quad& I_a(s) \in \{0, 1 \} &\quad \forall s \in S, \; a \in A \label{eq:bin_I}\\
+&& \quad& M_a = M^{\top} - M_a^{\perp} &\quad \forall a \in A
+\end{alignat}
+\end{block}
+
+If the optimal value of the SP is lower than $\delta^*$, a new inequality is added to the MP.
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Branch-and-Bound to find the optimal deterministic policy}
+The root of the branch-and-bound tree is associated to the full set of deterministic policies.\begin{columns}
+\begin{column}{0.5\textwidth}
+
+\textbf{Branching scheme}:
+\begin{itemize}
+\item select a couple $(s,a)$ of state and action.
+\item impose the following disjunction:
+\begin{itemize}
+\item ``left'' child node : 
+$$f_{s,a'}=0, \forall a'\neq a$$.
+\item ``right'' child node 
+$$f_{s,a}=0$$. 
+\end{itemize} 
+\end{itemize}
+%(The left child represents only deterministic policies with $f_{s,a}\neq 0$ and the right child represents deterministic policies with $f_{s,a}=0$  (i.e. $\pi(s,a)=0$))
+
+
+\end{column}
+\begin{column}{0.49\textwidth}
+	\begin{center}
+    \includegraphics[scale=0.195]{images/bb.png}
+	\end{center}
+Example of a branch-and-bound tree for an MDP with $4$ states and $3$ actions per state	
+\end{column}
+\end{columns}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Branch-and-Bound to find the optimal deterministic policy}
+\begin{itemize}
+\item We use the \textbf{optimal stochastic policy} as \textbf{under-estimator} of the optimal deterministic policy for a given branch of the tree.
+\item the optimal stochastic policy can be viewed as an \textbf{optimistic estimation} of the policy: if a node has a stochastic policy higher than the best deterministic policy found so far it is not necessary to continue exploring that branch and the node it can be pruned.
+\end{itemize}
+
+\begin{block}{\textbf{Cut-and-branch version of the algorithm.}}
+
+\begin{itemize}
+\item  The root note of the branch-and-bound tree is solved as usual. % (i.e. with the standard interactin between master and slave). 
+\item Once the algorithm starts to branch, additional Benders cuts are added only to compute the correct value of a deterministic policy.
+\item PRO: lower computing time needed to process a node.
+\item CON: weaker dual bounds.
+\end{itemize}
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{The ``rounding'' heuristic.}
+
+Let $\tilde{f}$ be a given visitation frequency value for the optimal stochastic policy. 
+
+The corresponding ``\textbf{rounding'' deterministic policy $\hat{\pi}$} can be computed as follows:
+
+\begin{itemize}
+\item for each $s'\in S$:
+\begin{itemize}
+\item find the action $a' = \text{argmax}_{a \in A}f_{s',a}$.
+\item fix the rest of the action to zero: $\hat{f}_{s',a} =0, \forall a \neq a'$
+\end{itemize}
+\item recover the deterministic policy $\hat{\pi}$ obtained from the above fixing.
+\end{itemize} 
+ 
+Despite being pretty simple, this approach represents a \textbf{plausible behaviour of a user} that want to derive a deterministic policy starting from a stochastic one. 
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Worse case analysis : \textit{Trident IRMDP}}
+%%%%%%%%%%%%%%%%%
+
+\begin{columns}
+\begin{column}{0.49\textwidth}
+
+
+\begin{figure}[]
+	\begin{center}
+$3$ states and $3$ actions:\\
+    \includegraphics[scale=0.4]{images/Trident_MDP.pdf}
+	\end{center}
+\end{figure}
+
+
+\end{column}
+
+\begin{column}{0.5\textwidth}
+
+\begin{itemize}
+%\item Three states: $s_0, s_1, s_2$, three actions $a_0, a_1, a_2$ and a discout factor $\gamma=1$.
+\item Transition function:\\
+$P(s_0 | s_2,a_0)=1$, $P(s_1 |s_2 ,a_1)=1$, $P(s_0 | s_2, a_2) = T_0$ and $P(s_1 | s_0, a_2) = T_1$.
+\item Two unknown rewards:\\
+ $r(a_0)= r_0 \in [-A,+A]$  $r(a_1)= r_1 \in [-A+B,+A+B]$\\
+ $A,B > 0$  $A \gg B$.\\
+%  Thus, $\mathcal{R} = [-A, +A]\times[-A+B, A+B]$
+\item $\beta(s_0)= \beta(s_1) = 0$, $\beta(s_2)=1$.
+
+\end{itemize} 
+
+%%%%%%%%%%%%%%%%%
+
+
+\end{column}
+\end{columns}
+
+\begin{block}{}
+\begin{lemma}\label{lemma:gap2}
+\textbf{The ratio between the maximum regret of the rounding deterministic policy and the optimal deterministic policy goes to $2$} with the increase of the value of $A$ with respect to $B$ and the increase of $T_1$. In other words:  
+\begin{align*}
+\lim_{A/B \rightarrow \infty, T_1 \rightarrow {\frac{1}{2}}^+} \dfrac{2A-B}{A- A T_0 +(A-B) T_1} = 2
+\end{align*}
+\end{lemma}
+
+\end{block}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Experimental results}
+
+We test our approach on two IRMDPs:
+\begin{itemize}
+\item Random MDPs (\texttt{Random}).
+\item Diamond MDPs (\texttt{Diamond}).
+\end{itemize}
+
+For a given MDP, let $MR(f^{\hat{\pi}}, \mathcal{R})$ be the maximum regret of the rounding deterministic policy and $MR(f^{\pi^*}, \mathcal{R})$  be the maximum regret of the optimal deterministic policy. 
+
+\begin{block}{Value Ratio}
+\center
+$VR = \dfrac{MR(f^{\hat{\pi}}, \mathcal{R})}{MR(f^{\pi^*}, \mathcal{R})}\;$.
+\end{block}
+
+Moreover, let $\hat{T}$ (respectively $T^*$) be the computing time necessary to calculate the rounding (respectively optimal) deterministic policy.
+
+\begin{block}{Time Ratio}
+\center
+$TR=\dfrac{T^*}{\hat{T}}\;$.
+\end{block}
+
+
+
+
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Experimental results}
+
+\begin{table}[h] % <-- HERE
+ \setlength{\tabcolsep}{2.5pt}
+ \renewcommand \arraystretch{1.0}
+\begin{center}
+\begin{tabular}{rrrrrrrrrrrrrrrrrrrrrrrrrrrr}
+	&		&				&				&				&	\multicolumn{2}{c}{	\texttt{Comp. Time}}	\\
+$|S|$	&	$|A|$	&		\texttt{VR}		&		\texttt{TR}		&		\texttt{\% diff}		&	\texttt{Base}	&	\texttt{C\&B}	\\
+\cmidrule(lr){1-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}  \cmidrule(lr){5-5}  \cmidrule(lr){6-7}
+5	&	2	&			1.07	&			1.83	&			50\%	&	2.59	&	2.27	\\
+	&	3	&			1.03	&			2.44	&			20\%	&	5.05	&	5.11	\\
+	&	4	&			1.09	&			2.17	&			50\%	&	5.28	&	4.67	\\
+	&	5	&			1.07	&			2.85	&			50\%	&	8.03	&	7.99	\\
+	&	10	&			1.02	&			2.50	&			30\%	&	13.76	&	12.61	\\
+\cmidrule(lr){1-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}  \cmidrule(lr){5-5}  \cmidrule(lr){6-7}
+10	&	2	&			1.11	&			4.11	&			90\%	&	21.78	&	20.12	\\
+	&	3	&			1.15	&			7.63	&			80\%	&	81.67	&	73.43	\\
+	&	4	&			1.04	&			9.19	&			60\%	&	312.05	&	266.35	\\
+	&	5	&			1.06	&			8.42	&			90\%	&	570.15	&	478.07	\\
+	&	10	&			1.01	&			18.79	&			90\%	&	1886.05	&	986.71	\\
+\cmidrule(lr){1-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}  \cmidrule(lr){5-5}  \cmidrule(lr){6-7}
+15	&	2	&			1.04	&			6.91	&			60\%	&	94.95	&	82.59	\\
+	&	3	&			1.05	&			18.75	&			80\%	&	2240.40	&	2024.85	\\
+	&	4	&			1.01	&			20.04	&			80\%	&	5366.92	&	3181.01	\\
+	&	5	&			1.03	&			32.10	&			100\%	&	7677.25	&	4127.52	\\
+\cmidrule(lr){1-2} \cmidrule(lr){3-3} \cmidrule(lr){4-4}  \cmidrule(lr){5-5}  \cmidrule(lr){6-7}
+	&	Avg.	&			1.06	&			7.77	&			70\%	&	1306.14	&	805.24	
+\end{tabular}						
+\end{center}
+\caption{Time Ratio and Value Ratio for \texttt{Random} MDPs.}														\label{tab:random}								
+\end{table}
+
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Experimental results}
+
+\begin{table}[h]																	
+ \centering
+ \small
+ \setlength{\tabcolsep}{4.0pt}
+ \renewcommand \arraystretch{1.1}
+\begin{tabular}{ccccccccccc}																					
+\texttt{p}	&	5	&	10	&	15	&	20	&	25	&	30	&	35	&	40	&	45	&	Avg.	\\	
+\cmidrule(lr){1-1} \cmidrule(lr){2-10} \cmidrule(lr){11-11}
+\texttt{VR} &	1.66	&	1.24	&	1.16	&	1.13	&	1.15	&	1.15	&	1.15	&	1.14	&	1.16	&	\textbf{1.22}	\\	
+\texttt{TR} &	10.23	&	7.44	&	6.32	&	6.48	&	7.67	&	5.93	&	7.62	&	10.46	&	13.80	&	\textbf{8.44}	\\	\\
+\end{tabular}
+\caption{Time Ratio and Value Ratio for \texttt{Diamond}.}														\label{tab:diamond}								
+\end{table}																						
+
+\end{frame}
+
+
+
+\begin{frame}
+\frametitle{Conclusions}
+
+\begin{itemize}
+\item We presented for the first time in the literature an algorithm to find an optimal deterministic policy that minimises the maximum regret of a Markov Decision Processes (MDP) with imprecise rewards.
+\item We proposed a branch-and-bound that uses Benders decomposition as bounding procedure. 
+\item In addition to a basic implementation, we propose a cut-and-branch implementation that turns out to reduce the overall computing time on average by $50\%$. 
+\item We theoretically show that basic rounding procedures find deterministic policies far from the optimal.
+\item We show that the additional computational effort of computing the optimal deterministic policy in comparison to the one needed to compute the optimal stochastic policy is acceptable (approximately one order of magnitude slower).
+\end{itemize}
+\end{frame}
+
 
 %------------------------------------------------
 
