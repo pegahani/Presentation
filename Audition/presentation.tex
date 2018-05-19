@@ -103,7 +103,7 @@
 %	TITLE PAGE
 %----------------------------------------------------------------------------------------
 
-\title[]{Concours Maître de Conférences\\ CRIStAL} % The short title appears at the bottom of every slide, the full title is only on the title page
+\title[CRIStAL]{Concours Maître de Conférences\\ CRIStAL} % The short title appears at the bottom of every slide, the full title is only on the title page
 
 \author{Pegah ALIZADEH} % Your name
 \institute[GREYC] % Your institution as it will appear on the bottom of every slide, may be shorthand to save space
@@ -208,22 +208,6 @@ ZANUTTINI
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Thèmes de recherche}
-
-\begin{center}
-
-\begin{tabular}{ll}
-   \makecell{Apprentissage par Renforcement (RL) \\ \small{processus de décision markov (MDP)}} & \makecell{Traitement Automatique \\ de Langages (TAL)} \\
-   a figure & a figure\\
-\end{tabular}
-\end{center}
-
-\end{frame}
-%------------------------------------------------
-\begin{frame}{Thèmes de recherche}
-
-\end{frame}
-%------------------------------------------------
 \begin{frame}{Travaux effectués - Les Méthodes Élicitation}
 \textbf{Contexte}: Prédire des informations incertains dans le modèle en interrogeant le décisionnaire de systèmes
 \vspace{0.2cm}
@@ -267,8 +251,8 @@ systèmes [STAIRS 2016, IJCNN 2016]
 
 \textbf{Plusieurs approches}:
 \begin{itemize}
-\item \textbf{Calculer les politique déterministes}: proposer un branch-and-bound basé sur le Benders decomposition. %comme bounding procedure.
 \item \textbf{Un calcul heuristique pour minimax-regret}: Générer des contraintes du programme linéaire aléatoirement au lieu de résoudre le programme linéaire exact.
+\item \textbf{Résultat}: La méthode heuristique est plus rapide et applicable sur les modèles de grande taille [IEEE-RIVF 2015]
 \end{itemize}
 
 \end{frame}
@@ -276,18 +260,68 @@ systèmes [STAIRS 2016, IJCNN 2016]
 %------------------------------------------------
 \begin{frame}{Travaux effectués - Les Méthodes Optimisation}
 
-\textbf{Résultat} : 
 \begin{itemize}
-\item Dans un temps 
-\item La méthode heuristique est plus rapide et applicable sur les modèles de grande taille [IEEE-RIVF 2015]
+\item \textbf{Calculer les politique déterministes}: proposer un branch-and-bound basé sur le Benders decomposition. %comme bounding procedure.
+\item \textbf{Résultat} [soumis à ECML 2018]: 
+	\begin{itemize}
+	\item Dans un temps $8$ fois plus lent, on trouve la politique déterministe avec le regret 	$25 \%$ moins que la politique stochastique   
+	\item Théocratiquement, on preuve que 
+	$$\frac{\text{regret de politique stochastic}}{\text{regret de politique deterministe}} = 2 $$
+	\end{itemize}
 \end{itemize}
 
 \end{frame}
 
 %------------------------------------------------
-\begin{frame}{Travaux effectués - Les Applications et Traitement Automatique de Langues}
+\begin{frame}{Travaux effectués \\ Les Applications et les réseaux de neurones}
+
+\begin{columns}
+\begin{column}{0.6\textwidth}
+   
+	\textbf{Contexte}: Composition de web service\\
+	\vspace{0.2cm}
+	\textbf{Question}: Il faut sélectionner laquelle service dans chaque service abstract tel que: les qualités des services convient les préférences des utilisateurs%, Et minimiser l’énergie totale consommée par les services sélectionnés  
+\\	
+	\vspace{0.2cm}
+	\textbf{Approche}: Modéliser la probleme comme une MDP avec des objectives de qualité de service et Implémenter l'algorithme d'ABVI.
+\end{column}
+\begin{column}{0.4\textwidth}  %%<--- here
+    \begin{center}
+     \includegraphics[width=0.8\textwidth]{images/web-service}
+     \end{center}
+\end{column}
+\end{columns}
 
 \end{frame}
+%------------------------------------------------
+\begin{frame}{Travaux effectués \\ Les Applications et les réseaux de neurones}
+\textbf{Contexte}: Recherche des informations et entités nomes dans les documents en l'internet 
+\begin{center}
+ nom d'expert $\longrightarrow$ \framebox{Système} $\longrightarrow$ parcours professionnelle d'experte  
+\end{center}
+\textbf{Approche de RL profond}: Modéliser le problème comme une MDP et trouver le meilleurs parcours avec  algorithm de Deep Q-network. 
+
+\textbf{Résultat}: On arrive à extraire le parcours professionnelle de chaque personne avec une bonne precision et en générant moins des requêtes sur le moteurs de recherche.  
+\end{frame}
+%------------------------------------------------
+\begin{frame}{Travaux effectués - TAL \\ Compte rendu de Réunion}
+\vspace{-0.5cm}
+	\begin{center}
+     \includegraphics[width=0.7\textwidth]{images/reus-image} \\
+	\end{center}
+%
+
+\textbf{Contexte}: Extraire des informations importants et structurés de réunions comme le projet, décisions, problèmes lies a projets et etc. \\
+
+\textbf{Plusieurs Approches}:
+\begin{itemize}
+	\item regroupement des réunions avec les méthodes topic modeling et tf-idf. 
+	\item extraire des informations caractérisations de chaque réunions avec le tf-idf. 
+	\item Identification des actes de dialogues avec les méthodes non-supervisées et apprentissage profond (comme LSTM)
+\end{itemize}
+
+\end{frame}
+
 %------------------------------------------------
 \begin{frame}{publications}
 Articles acceptés:\\
