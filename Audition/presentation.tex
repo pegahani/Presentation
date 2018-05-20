@@ -209,153 +209,299 @@ ZANUTTINI
 
 %------------------------------------------------
 \begin{frame}{Travaux effectués - Les Méthodes Élicitation}
-\textbf{Contexte}: Prédire des informations incertains dans le modèle en interrogeant le décisionnaire de systèmes
-\vspace{0.2cm}
-
+\begin{block}{Contexte}
+\imp{Prédire des informations incertains} dans le modèle \imp{en interrogeant} le décisionnaire de systèmes.
 \begin{center}
 communication avec l’utilisateur $\leftrightarrows$ \framebox{MOMDP} $\leftrightarrows$ la politique $\pi$
 \end{center}
-\vspace{0.2cm}
+\end{block}
 
-\textbf{Plusieurs approches}:
+
+\begin{block}{Approches utilisés}
 \begin{itemize}
-\item Une approche itérative basée sur une function de valeur en utilisent des méthodes de clustering
-\item calculer un ensemble pareto frontier de politiques offline, et ensuit communiquer avec l’agent.
+\item On a developpé une approche itérative basée sur une function de valeur en utilisent des \imp{méthodes de clustering} pour bla bla.
+\item La pareto frontier de politiques est calculé offline. On genére des coupes capables de réduire de manière significative le polytope des recompenses.
+\item aomar.
 \end{itemize}
-
-\textbf{Résultat}: Le modèle trouve la politique optimale avec les moins
-nombre possibles de communications avec l’agent ou décideur de
-systèmes [STAIRS 2016, IJCNN 2016]
+\end{block}
 
 \end{frame}
 
+
+\begin{frame}{Travaux effectués - Les Méthodes Élicitation}
+
+\begin{block}{Résultats}
+\begin{itemize}
+\item
+\item On trouve la politique optimale avec $xx \% $  moins de communications avec l’agent ou décideur de
+systèmes
+\item Nous sommes en mesure de trouver le sous-ensemble de services Web qui maximisent les préférences de l'utilisateur.
+\end{itemize}
+\end{block}
+
+\begin{itemize}
+\small
+\item P. Alizadeh, Y. Chevaleyre et F. Lévy. Solving MDPs with Unknown Reward Using Nondominated Vector-Valued Functions. \textbf{ECAI (STAIRS) 2016}
+\item P. Alizadeh, Y. Chevaleyre et F. Lévy. Advantage Based Value Iteration for Markov Decision Processes with Unknown Rewards.\textbf{IJCNN 2016}
+\item P. Alizadeh, Aomar Osmani, Abdelghani Chibani, Yacine Amirat et Mohamed Essaid Khanouche. Interactive QoS-aware Services Selection for the Internet of Things. \textbf{Soumis.}
+\end{itemize}
+
+
+\end{frame}
+
+
+
 %------------------------------------------------
-\begin{frame}{Travaux effectués - Les Méthodes Optimisation}
+%\begin{frame}{Travaux effectués - Les Méthodes Optimisation}
+\begin{frame}{Travaux effectués - Minimax Regret }
 
-%\textbf{Contexte}:Soit les récompenses sont incertaines et limitées. Peut-on trouver une politique robuste par rapport aux informations données dans le modèle? 
+%\textbf{Contexte}:
+\begin{block}{Contexte}
+\begin{itemize}
+\item Comment gerer un context ou \imp{les récompenses sont incertaines}? On calcule la politique optimale selon la méthode de \imp{minimax regret}.
+\end{itemize}
+\end{block}
 
-\textbf{Approche d’optimisation}: Calculer la politique optimale avec la méthode de minimax regret quand on peut pas savoir plus sur des préférences des utilisateurs.
 
-\vspace{0.2cm}
-
+\begin{block}{Approches utilisés}
+\imp{Benders Decomposition:}\\
+	\vspace{-0.4cm}
 \begin{center}
 	\framebox{Master Programme} \\
 	\vspace{0.1cm}
-	Informations (solutions)~~~~~ $\downarrow$ ~~~~~ $\uparrow$ feed-backs (coupes)\\
+	Informations (politiques)~~~~~ $\downarrow$ ~~~~~ $\uparrow$ feed-backs (coupes)\\
 	\vspace{0.1cm}
 	\framebox{Slave Programme} 
-
 \end{center}
-
-\vspace{0.2cm}
-
-\textbf{Plusieurs approches}:
+\vspace{-0.5 cm}
+\begin{overlayarea}{\textwidth}{2.75cm}
+    \only<1>{
 \begin{itemize}
-\item \textbf{Un calcul heuristique pour minimax-regret}: Générer des contraintes du programme linéaire aléatoirement au lieu de résoudre le programme linéaire exact.
-\item \textbf{Résultat}: La méthode heuristique est plus rapide et applicable sur les modèles de grande taille [IEEE-RIVF 2015]
+\item Une \imp{procedure heuristique}: Générer des contraintes du programme linéaire aléatoirement au lieu de résoudre le programme linéaire exact.
+\end{itemize}
+      }
+    \only<2>{
+\begin{itemize}
+\item On a développé un \imp{branch-and-bound amélioré} basé sur Benders Decomposition pour calculer la meilleure politique déterministe.
+\item On a proposé une \imp{analyse théorique et expérimentale} des politiques déterministes pour MDP.
+\end{itemize}
+        }
+\end{overlayarea}
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Travaux effectués - Minimax Regret }
+
+\begin{block}{Résultats}
+\begin{itemize}
+\item La méthode heuristique est plus rapide et applicable sur les modèles de grande taille.
+\item Dans un temps $8$ fois plus lent, on trouve la politique déterministe avec le regret 	$25 \%$ moins que la politique stochastique.  
+\item théoriquement, on preuve que 
+	$\frac{\text{regret pol. determinisé}}{\text{regret pol. déterministe}} = 2 $
+\end{itemize}
+\end{block}
+
+\begin{itemize}
+\small
+\item  P. Alizadeh, Y. Chevaleyre et J. D. Zucker. Approximate regret based elicitation in Markov Decision Process. \textbf{IEEE-RIVF 2015} 
+\item Pegah Alizadeh, Emiliano Traversi et Aomar Osmani. Deterministic Solutions Based on Maximum Regrets in Markov Decision Processes with Imprecise Rewards. %, \textbf{ECML 2018}
 \end{itemize}
 
 \end{frame}
+%------------------------------------------------
+
+
 
 %------------------------------------------------
-\begin{frame}{Travaux effectués - Les Méthodes Optimisation}
+%\begin{frame}{Travaux effectués - Les Méthodes Optimisation}
+%
+%
+%
+%\begin{itemize}
+%
+%\item \textbf{Résultat}: 
+%\item \textbf{Calculer les politique déterministes}: proposer un branch-and-bound basé sur le Benders decomposition. %comme bounding procedure.
+%\item \textbf{Résultat} [soumis à ECML 2018]: 
+%	\begin{itemize}
+%	\item Dans un temps $8$ fois plus lent, on trouve la politique déterministe avec le regret 	$25 \%$ moins que la politique stochastique   
+%	\item Théocratiquement, on preuve que 
+%	$$\frac{\text{regret de politique stochastic}}{\text{regret de politique deterministe}} = 2 $$
+%	\end{itemize}
+%\end{itemize}
+%
+%\end{frame}
+
+%%------------------------------------------------
+%\begin{frame}{Travaux effectués \\ Les Applications et les réseaux de neurones}
+%
+%\begin{columns}
+%\begin{column}{0.6\textwidth}
+%   
+%	\textbf{Contexte}: Composition de web service\\
+%	\vspace{0.2cm}
+%	\textbf{Question}: Il faut sélectionner laquelle service dans chaque service abstract tel que: les qualités des services convient les préférences des utilisateurs%, Et minimiser l’énergie totale consommée par les services sélectionnés  
+%\\	
+%	\vspace{0.2cm}
+%	\textbf{Approche}: Modéliser la probleme comme une MDP avec des objectives de qualité de service et Implémenter l'algorithme d'ABVI.
+%\end{column}
+%\begin{column}{0.4\textwidth}  %%<--- here
+%    \begin{center}
+%     \includegraphics[width=0.8\textwidth]{images/web-service}
+%     \end{center}
+%\end{column}
+%\end{columns}
+%
+%\end{frame}
+
+
+%------------------------------------------------
+%------------------------------------------------
+\begin{frame}{Travaux effectués - TAL - Compte rendu de Réunion }
+\vspace{-0.3cm}
+\begin{block}{Contexte}
+	\begin{center}
+     \includegraphics[width=0.55\textwidth]{images/reus-image} \\
+	\end{center}
+\vspace{-0.5cm}
+\begin{itemize}
+\item Extraire des informations importants et structurés des informations des notes de réunions (projet, décisions, problèmes lies a projets, etc.)
+\end{itemize}
+\end{block}
+
+
+\begin{block}{Approches utilisés}
+\begin{itemize}
+	\item Application des méthodes topic modeling et tf-idf.
+	\item Regroupement des réunions et extraction des informations caractérisations de chaque réunions. 
+	\item Identification des actes de dialogues avec les méthodes non-supervisées et apprentissage profond (comme LSTM).
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Travaux effectués - TAL - Compte rendu de Réunion }
+
+\begin{block}{Résultats}
+\begin{itemize}
+\item
+\end{itemize}
+\end{block}
 
 \begin{itemize}
-\item \textbf{Calculer les politique déterministes}: proposer un branch-and-bound basé sur le Benders decomposition. %comme bounding procedure.
-\item \textbf{Résultat} [soumis à ECML 2018]: 
-	\begin{itemize}
-	\item Dans un temps $8$ fois plus lent, on trouve la politique déterministe avec le regret 	$25 \%$ moins que la politique stochastique   
-	\item Théocratiquement, on preuve que 
-	$$\frac{\text{regret de politique stochastic}}{\text{regret de politique deterministe}} = 2 $$
-	\end{itemize}
+\small
+\item Pegah Alizadeh, Peggy Cellier, Bruno Crémellieux, Thierry Charnois et Albrecht Zimmermann. An Experimental Approach For Information Extraction in Multi-Party Dialogue Discourse, \textbf{CICLING 2018}
+\item Pegah Alizadeh, Peggy Cellier, Bruno Crémellieux, Thierry Charnois et Albrecht Zimmermann. An Unsupervised Learning Approach for Dialogue Act Tagging in Multi-Party Dialogues. \textbf{Article en préparation.}
 \end{itemize}
 
 \end{frame}
+%------------------------------------------------
+%------------------------------------------------
+
+%%------------------------------------------------
+%\begin{frame}{Travaux effectués - TAL \\ Compte rendu de Réunion}
+%\vspace{-0.5cm}
+%	\begin{center}
+%     \includegraphics[width=0.7\textwidth]{images/reus-image} \\
+%	\end{center}
+%%
+%
+%\textbf{Contexte}: Extraire des informations importants et structurés de réunions comme le projet, décisions, problèmes lies a projets et etc. \\
+%
+%\textbf{Plusieurs Approches}:
+%\begin{itemize}
+%	\item regroupement des réunions avec les méthodes topic modeling et tf-idf. 
+%	\item extraire des informations caractérisations de chaque réunions avec le tf-idf. 
+%	\item Identification des actes de dialogues avec les méthodes non-supervisées et apprentissage profond (comme LSTM)
+%\end{itemize}
+%
+%\end{frame}
+%
+
+
 
 %------------------------------------------------
-\begin{frame}{Travaux effectués \\ Les Applications et les réseaux de neurones}
-
-\begin{columns}
-\begin{column}{0.6\textwidth}
-   
-	\textbf{Contexte}: Composition de web service\\
-	\vspace{0.2cm}
-	\textbf{Question}: Il faut sélectionner laquelle service dans chaque service abstract tel que: les qualités des services convient les préférences des utilisateurs%, Et minimiser l’énergie totale consommée par les services sélectionnés  
-\\	
-	\vspace{0.2cm}
-	\textbf{Approche}: Modéliser la probleme comme une MDP avec des objectives de qualité de service et Implémenter l'algorithme d'ABVI.
-\end{column}
-\begin{column}{0.4\textwidth}  %%<--- here
-    \begin{center}
-     \includegraphics[width=0.8\textwidth]{images/web-service}
-     \end{center}
-\end{column}
-\end{columns}
-
-\end{frame}
 %------------------------------------------------
-\begin{frame}{Travaux effectués \\ Les Applications et les réseaux de neurones}
-\textbf{Contexte}: Recherche des informations et entités nomes dans les documents en l'internet 
+\begin{frame}{Travaux effectués - Reconstruction du parcours professionnelle}
+\begin{block}{Contexte}
+Recherche des informations et entités nomes dans les documents en l'internet 
 \begin{center}
  nom d'expert $\longrightarrow$ \framebox{Système} $\longrightarrow$ parcours professionnelle d'experte  
 \end{center}
-\textbf{Approche de RL profond}: Modéliser le problème comme une MDP et trouver le meilleurs parcours avec  algorithm de Deep Q-network. 
+\end{block}
 
-\textbf{Résultat}: On arrive à extraire le parcours professionnelle de chaque personne avec une bonne precision et en générant moins des requêtes sur le moteurs de recherche.  
+\begin{block}{Approches utilisés}
+\begin{itemize}
+\item \textbf{Approche de RL profond}: Modéliser le problème comme une MDP et trouver le meilleurs parcours avec  algorithm de Deep Q-network.  
+\end{itemize}
+\end{block}
+\end{frame}
+
+
+\begin{frame}{Travaux effectués - Reconstruction du parcours professionnelle}
+
+\begin{block}{Résultats}
+\begin{itemize}
+\item \textbf{Résultat}: On arrive à extraire le parcours professionnelle de chaque personne avec une bonne precision et en générant moins des requêtes sur le moteurs de recherche.  
+\end{itemize}
+\end{block}
+
+\begin{itemize}
+\small
+\item
+\end{itemize}
+
 \end{frame}
 %------------------------------------------------
-\begin{frame}{Travaux effectués - TAL \\ Compte rendu de Réunion}
-\vspace{-0.5cm}
-	\begin{center}
-     \includegraphics[width=0.7\textwidth]{images/reus-image} \\
-	\end{center}
+%------------------------------------------------
+
+
+%%------------------------------------------------
+%\begin{frame}{Travaux effectués \\ Les Applications et les réseaux de neurones}
+%\textbf{Contexte}: Recherche des informations et entités nomes dans les documents en l'internet 
+%\begin{center}
+% nom d'expert $\longrightarrow$ \framebox{Système} $\longrightarrow$ parcours professionnelle d'experte  
+%\end{center}
+%\textbf{Approche de RL profond}: Modéliser le problème comme une MDP et trouver le meilleurs parcours avec  algorithm de Deep Q-network. 
 %
+%\textbf{Résultat}: On arrive à extraire le parcours professionnelle de chaque personne avec une bonne precision et en générant moins des requêtes sur le moteurs de recherche.  
+%\end{frame}
 
-\textbf{Contexte}: Extraire des informations importants et structurés de réunions comme le projet, décisions, problèmes lies a projets et etc. \\
-
-\textbf{Plusieurs Approches}:
-\begin{itemize}
-	\item regroupement des réunions avec les méthodes topic modeling et tf-idf. 
-	\item extraire des informations caractérisations de chaque réunions avec le tf-idf. 
-	\item Identification des actes de dialogues avec les méthodes non-supervisées et apprentissage profond (comme LSTM)
-\end{itemize}
-
-\end{frame}
 
 %------------------------------------------------
-\begin{frame}{publications}
-Articles acceptés:\\
-\begin{itemize}
-
-\item [1] Pegah Alizadeh, Peggy Cellier, Bruno Crémellieux, Thierry Charnois et Albrecht Zimmermann. An Experimental Approach For Information Extraction in Multi-Party Dialogue Discourse, \textbf{CICLING 2018}\\
-
-
-\item [2] P. Alizadeh, Y. Chevaleyre et F. Lévy. Solving MDPs with Unknown Reward Using Nondominated Vector-Valued Functions. \textbf{ECAI (STAIRS) 2016}\\
-
-
-\item [3] P. Alizadeh, Y. Chevaleyre et F. Lévy. Advantage Based Value Iteration for Markov Decision Processes with Unknown Rewards.\textbf{IJCNN 2016}\\
-
-\item [4] P. Alizadeh, Y. Chevaleyre et J. D. Zucker. Approximate regret based elicitation in Markov Decision Process. \textbf{IEEE-RIVF 2015} \\
-
-\end{itemize}
-
-\end{frame}
-%------------------------------------------------
-\begin{frame}{publications}
-
-Articles soumis:\\
-
-\begin{itemize}
-	\item Pegah Alizadeh, Emiliano Traversi et Aomar Osmani. Deterministic Solutions Based on Maximum Regrets in Markov Decision Processes with Imprecise Rewards. %, \textbf{ECML 2018}
-	\item Pegah Alizadeh, Aomar Osmani, Abdelghani Chibani, Yacine Amirat et Mohamed Essaid Khanouche. Interactive QoS-aware Services Selection for the Internet of Things.
-\end{itemize}
-
-Articles en préparation:\\
-\begin{itemize}
-	\item Pegah Alizadeh, Peggy Cellier, Bruno Crémellieux, Thierry Charnois et Albrecht Zimmermann. An Unsupervised Learning Approach for Dialogue Act Tagging in Multi-Party Dialogues. 
-\end{itemize}
-
-\end{frame}
+%\begin{frame}{publications}
+%Articles acceptés:\\
+%\begin{itemize}
+%
+%\item [1] Pegah Alizadeh, Peggy Cellier, Bruno Crémellieux, Thierry Charnois et Albrecht Zimmermann. An Experimental Approach For Information Extraction in Multi-Party Dialogue Discourse, \textbf{CICLING 2018}\\
+%
+%
+%\item [2] P. Alizadeh, Y. Chevaleyre et F. Lévy. Solving MDPs with Unknown Reward Using Nondominated Vector-Valued Functions. \textbf{ECAI (STAIRS) 2016}\\
+%
+%
+%\item [3] P. Alizadeh, Y. Chevaleyre et F. Lévy. Advantage Based Value Iteration for Markov Decision Processes with Unknown Rewards.\textbf{IJCNN 2016}\\
+%
+%\item [4] P. Alizadeh, Y. Chevaleyre et J. D. Zucker. Approximate regret based elicitation in Markov Decision Process. \textbf{IEEE-RIVF 2015} \\
+%
+%\end{itemize}
+%
+%\end{frame}
+%%------------------------------------------------
+%\begin{frame}{publications}
+%
+%Articles soumis:\\
+%
+%\begin{itemize}
+%	\item Pegah Alizadeh, Emiliano Traversi et Aomar Osmani. Deterministic Solutions Based on Maximum Regrets in Markov Decision Processes with Imprecise Rewards. %, \textbf{ECML 2018}
+%	\item Pegah Alizadeh, Aomar Osmani, Abdelghani Chibani, Yacine Amirat et Mohamed Essaid Khanouche. Interactive QoS-aware Services Selection for the Internet of Things.
+%\end{itemize}
+%
+%Articles en préparation:\\
+%\begin{itemize}
+%	\item Pegah Alizadeh, Peggy Cellier, Bruno Crémellieux, Thierry Charnois et Albrecht Zimmermann. An Unsupervised Learning Approach for Dialogue Act Tagging in Multi-Party Dialogues. 
+%\end{itemize}
+%
+%\end{frame}
 
 %------------------------------------------------
 \input{projet-recherche.tex}
