@@ -219,23 +219,31 @@ communication avec l’utilisateur $\leftrightarrows$ \framebox{MOMDP} $\leftrig
 
 \begin{block}{Approches utilisés}
 \begin{itemize}
-\item On a developpé une approche itérative basée sur une function de valeur en utilisent des \imp{méthodes de clustering} pour bla bla.
-\item La pareto frontier de politiques est calculé offline. On genére des coupes capables de réduire de manière significative le polytope des recompenses.
-\item aomar.
+\item On a developpé une approche itérative basée sur une function de valeur en utilisent des \imp{méthodes de clustering} pour generer des \imp{requ\^etes plus informatives}.
+\item La frontier de Pareto des politiques non dominées est calculé offline. On genére des \imp{coupes}capables de réduire de manière significative le \imp{polytope des recompenses}.
+\item Probleme de \imp{composition de \textit{web-service}}: identifier la politique qui maximise la qualité des service selon les préférences des utilisateurs.
+%sélectionner laquelle service dans chaque service abstract tel que: les qualités des services convient les préférences des utilisateurs
 \end{itemize}
 \end{block}
 
 \end{frame}
 
 
+%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%
+
+
+
 \begin{frame}{Travaux effectués - Les Méthodes Élicitation}
 
 \begin{block}{Résultats}
 \begin{itemize}
-\item
-\item On trouve la politique optimale avec $xx \% $  moins de communications avec l’agent ou décideur de
+\item On trouve la politique optimale avec \imp{$65 \% $  moins de communications }avec l’agent ou décideur de
 systèmes
-\item Nous sommes en mesure de trouver le sous-ensemble de services Web qui maximisent les préférences de l'utilisateur.
+\item Notre méthode trouve la politique optimale  pour \imp{instances réeles de grande taille}.
+%\item Nous sommes en mesure de trouver le sous-ensemble de services Web qui maximisent les préférences de l'utilisateur.
 \end{itemize}
 \end{block}
 
@@ -243,7 +251,7 @@ systèmes
 \small
 \item P. Alizadeh, Y. Chevaleyre et F. Lévy. \textit{Solving MDPs with Unknown Reward Using Nondominated Vector-Valued Functions}. \textbf{ECAI (STAIRS) 2016.}
 \item P. Alizadeh, Y. Chevaleyre et F. Lévy. \textit{Advantage Based Value Iteration for Markov Decision Processes with Unknown Rewards}. \textbf{IJCNN 2016.}
-\item P. Alizadeh, Aomar Osmani, Abdelghani Chibani, Yacine Amirat et Mohamed Essaid Khanouche. \textit{Interactive QoS-aware Services Selection for the Internet of Things}. \textbf{Soumis.}
+\item P. Alizadeh, Aomar Osmani, Abdelghani Chibani, Yacine Amirat et Mohamed Essaid Khanouche. \textit{Interactive QoS-aware Services Selection for the Internet of Things}. \textbf{Soumis à IEEE TSMC.}
 \end{itemize}
 
 
@@ -365,16 +373,17 @@ systèmes
 	\end{center}
 \vspace{-0.5cm}
 \begin{itemize}
-\item Extraire des informations importants et structurés des informations des notes de réunions (projet, décisions, problèmes lies a projets, etc.)
+\item Extraire les \imp{informations importants} à partire des \imp{transcriptions de réunions} (comme projet, décisions, problèmes lies a projets, etc.)
 \end{itemize}
 \end{block}
 
 
 \begin{block}{Approches utilisés}
 \begin{itemize}
-	\item Application des méthodes topic modeling et tf-idf.
-	\item Regroupement des réunions et extraction des informations caractérisations de chaque réunions. 
-	\item Identification des actes de dialogues avec les méthodes non-supervisées et apprentissage profond (comme LSTM).
+%	\item Application des méthodes topic modeling et tf-idf.
+	\item \imp{Regroupement des réunions} avec les méthodes topic modeling et tf-idf.
+	\item \imp{Caractérisations de chaque réunions} avec la méthode topic modeling. 
+	\item \imp{Identification des actes de dialogues} avec les méthodes non-supervisées et apprentissage profond (comme LSTM).
 \end{itemize}
 \end{block}
 \end{frame}
@@ -384,7 +393,9 @@ systèmes
 
 \begin{block}{Résultats}
 \begin{itemize}
-\item
+\item Topic modeling  et tf-idf sont \imp{complémentaire}. 
+\item \imp{topic modeling} est meilleure pour la \imp{synthèse et l'extraction de thème}.
+\item \imp{tf-idf} fonctionne bien sur les \imp{caractérisations de réunion}.
 \end{itemize}
 \end{block}
 
@@ -442,13 +453,14 @@ Recherche des informations et entités nomes dans les documents en l'internet
 
 \begin{block}{Résultats}
 \begin{itemize}
-\item \textbf{Résultat}: On arrive à extraire le parcours professionnelle de chaque personne avec une bonne precision et en générant moins des requêtes sur le moteurs de recherche.  
+\item On arrive à extraire le parcours professionnelle de chaque personne avec une bonne precision et en générant moins des requêtes sur le moteurs de recherche.  
 \end{itemize}
 \end{block}
 
 \begin{itemize}
 \small
-\item
+\item  Pegah Alizadeh, Jorge Garcia Flores, Ivan Vladimir Meza Ruiz, Luis Pineda Cortes.
+\textit{Cartography of the diaspora of knowledge by semantic search of the web.} \textbf{En préparation.}
 \end{itemize}
 
 \end{frame}
@@ -539,31 +551,31 @@ Des étudiants de 1ère et 2ème année en \textbf{Informatique à l'IUT} de Par
 
 \input{projet-teaching.tex}
 %------------------------------------------------
-\begin{frame}
-\frametitle{References}
-\footnotesize{
-\begin{thebibliography}{99} 
-
-\bibitem[Narasimhan et al., 2016]{Narasimhan}Karthik Narasimhan, Adam Yala and Regina Barzilay. (2016)
-\newblock Improving Information Extraction by Acquiring External Evidence with
-Reinforcement Learning. 
-\newblock \emph{EMNLP}
-%%
-\bibitem[Benavent et Zanuttini, 2017]{Kim2015} Florian Benavent and Bruno Zanuttini. (2017)
-\newblock An Experimental Study of Advice in Sequential Decision-Making under
-Uncertainty
-\newblock \emph{AAAI}
-%%
-\bibitem[Kim et al.2016]{Kim2016} Weng, P., and Zanuttini, B.(2013)
-\newblock Interactive value iteration for Markov decision processes with unknown rewards.
-\newblock \emph{23rd International Joint Conference on Artificial Intelligence (IJCAI 2013)}
-%%
-
-%\bibitem[]{}
-%\newblock
-%\newblock \emph{}
-\end{thebibliography}
-}
-\end{frame}
+%\begin{frame}
+%\frametitle{References}
+%\footnotesize{
+%\begin{thebibliography}{99} 
+%
+%\bibitem[Narasimhan et al., 2016]{Narasimhan}Karthik Narasimhan, Adam Yala and Regina Barzilay. (2016)
+%\newblock Improving Information Extraction by Acquiring External Evidence with
+%Reinforcement Learning. 
+%\newblock \emph{EMNLP}
+%%%
+%\bibitem[Benavent et Zanuttini, 2017]{Kim2015} Florian Benavent and Bruno Zanuttini. (2017)
+%\newblock An Experimental Study of Advice in Sequential Decision-Making under
+%Uncertainty
+%\newblock \emph{AAAI}
+%%%
+%\bibitem[Kim et al.2016]{Kim2016} Weng, P., and Zanuttini, B.(2013)
+%\newblock Interactive value iteration for Markov decision processes with unknown rewards.
+%\newblock \emph{23rd International Joint Conference on Artificial Intelligence (IJCAI 2013)}
+%%%
+%
+%%\bibitem[]{}
+%%\newblock
+%%\newblock \emph{}
+%\end{thebibliography}
+%}
+%\end{frame}
 
 \end{document} 
